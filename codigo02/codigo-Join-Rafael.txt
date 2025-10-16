@@ -1,10 +1,3 @@
-docker-compose up -d
-
-docker exec -it postgres_container psql -U root -d bd_aula02
-
-CREATE DATABASE empresa;
-
-
 CREATE TABLE fornecedor (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL UNIQUE,
@@ -98,9 +91,6 @@ INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VAL
   (2, 4, 1, 699.00);
 
 INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VALUES
-  (2, 4, 1, 699.00);
-
-INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VALUES
   (3, 2, 1, 899.50),
   (3, 5, 1, 429.90);
 
@@ -143,3 +133,34 @@ INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VAL
 
 INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VALUES
   (10, 10, 1, 349.00);
+
+
+SELECT * FROM clientes;
+
+SELECT * FROM pedidos;
+
+-- INNER JOIN
+SELECT
+    p.id AS pedido_id,
+    p.data_pedido,
+    c.id AS cliente_id,
+    c.nome AS cliente_nome
+FROM
+    pedidos p
+INNER JOIN clientes c
+    ON p.id_cliente = c.id;
+
+-- Produtos mais vendidos (quantidade total vendida) usando o itens_pedido e produtos;
+SELECT
+    pr.id AS produto_id,
+    pr.nome AS produto_nome,
+    SUM(it.quantidade) AS total_unidades_vendidas
+FROM
+    itens_pedido it
+INNER JOIN produtos pr
+    ON it.id_produto = pr.id
+GROUP BY
+    pr.id,
+    pr.nome
+ORDER BY
+    total_unidades_vendidas DESC;
