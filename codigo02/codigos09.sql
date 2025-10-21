@@ -62,3 +62,34 @@ FROM
     clientes c
 RIGHT JOIN pedidos p
     ON p.id_cliente = c.id;
+
+SELECT
+    p.id AS produto_id,
+    p.nome AS produto_nome,
+    SUM(ip.quantidade) AS quantidade_vendida
+FROM
+    produtos p
+LEFT JOIN 
+    itens_pedido ip
+ON 
+    ip.id_produto = p.id
+GROUP BY
+    p.id,
+    p.nome
+ORDER BY
+    p.id ASC;
+
+SELECT * FROM itens_pedido ORDER BY id_produto;
+
+SELECT
+    ip.id_pedido,
+    ip.id_produto,
+    p.nome AS produto_nome,
+    ip.quantidade,
+    ip.preco_unitario
+FROM
+    itens_pedido ip
+INNER JOIN produtos p
+    ON ip.id_produto = p.id
+ORDER BY
+    ip.id_pedido;
