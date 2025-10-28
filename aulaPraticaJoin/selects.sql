@@ -54,3 +54,9 @@ LEFT JOIN consulta c
     ON c.paciente_id = p.id
 WHERE
     c.paciente_id IS NULL;
+
+ALTER TABLE paciente ALTER COLUMN numero_cartao SET NOT NULL;
+ALTER TABLE paciente ADD CONSTRAINT uq_paciente_numero_cartao UNIQUE (numero_cartao);
+ALTER TABLE medico ALTER COLUMN crm SET NOT NULL;
+ALTER TABLE medico ADD CONSTRAINT uq_medico_crm UNIQUE (crm);
+ALTER TABLE pessoa ALTER COLUMN data_nascimento SET NOT NULL;

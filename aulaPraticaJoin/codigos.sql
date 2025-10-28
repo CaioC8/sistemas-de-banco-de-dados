@@ -134,9 +134,18 @@ WHERE NOT EXISTS (
   SELECT 1 FROM consulta c WHERE c.medico_id = m.pessoa_id
 );
 
+SELECT pc.pessoa_id, p.nome, cpf, pc.numero_cartao
+FROM paciente pc
+JOIN pessoa p ON pc.pessoa_id = p.id
+LEFT JOIN consulta c ON pc.pessoa_id = c.paciente_id
+WHERE c.id IS NULL;
+
 -- ATIVIDADE 8
 ALTER TABLE paciente ALTER COLUMN numero_cartao SET NOT NULL;
 ALTER TABLE paciente ADD CONSTRAINT uq_paciente_numero_cartao UNIQUE (numero_cartao);
 ALTER TABLE medico ALTER COLUMN crm SET NOT NULL;
 ALTER TABLE medico ADD CONSTRAINT uq_medico_crm UNIQUE (crm);
 ALTER TABLE pessoa ALTER COLUMN data_nascimento SET NOT NULL;
+ALTER TABLE pessoa ALTER COLUMN nome TYPE VARCHAR(255);
+ALTER TABLE pessoa ALTER COLUMN cpf SET NOT NULL;
+ALTER TABLE pessoa ALTER COLUMN telefone SET NOT NULL;
