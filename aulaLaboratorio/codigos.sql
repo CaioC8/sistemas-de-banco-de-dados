@@ -99,6 +99,6 @@ FROM
 JOIN pedidos p
     ON p.cliente_id = c.id
 GROUP BY
-    c.id
+    c.nome
 ORDER BY
     faturamento DESC;
